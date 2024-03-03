@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/riff_hub
+    username: root
+    password: reandnagi1
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.riffhub.bean
+  mapper-locations: classpath:mapper/*.xml

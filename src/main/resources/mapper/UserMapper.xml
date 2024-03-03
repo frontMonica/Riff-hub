@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.riffhub.mapper.UserMapper">
+    <insert id="add" parameterType="com.riffhub.pojo.User">
+        insert into users(username, password, nickname, create_time, update_time)
+        values (#{username}, #{password}, #{nickname}, now(), now())
+    </insert>
+
+    <select id="findByUsername" resultType="com.riffhub.pojo.User">
+        SELECT * FROM users WHERE username=#{username}
+    </select>
+</mapper>
