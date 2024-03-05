@@ -19,4 +19,6 @@
         insert into replies(post_id, user_id, content, create_time)
         values (#{postId}, #{userId}, #{content}, now())
     </insert>
+
+
 </mapper>

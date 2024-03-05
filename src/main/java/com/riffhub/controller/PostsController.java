@@ -18,7 +18,6 @@ public class PostsController {
 
     @PostMapping("/publish")
     public Result publish(@RequestBody Map<String,String> params) {
-
         return postsService.publish(params);
     }
 
