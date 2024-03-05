@@ -67,5 +67,10 @@ public class PostsServiceimpl implements PostsService {
         return Result.success();
     }
 
-
+    @Override
+    public void reply(Integer postId, String content) {
+        Map<String,Object> userInfo = ThreadLocalUtil.get();
+        Integer userId = (Integer) userInfo.get("id");
+        postsMapper.reply(postId, userId, content);
+    }
 }

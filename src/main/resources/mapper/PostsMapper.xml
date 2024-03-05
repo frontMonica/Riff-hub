@@ -14,4 +14,9 @@
             (#{item.tagId},#{item.postId})
         </foreach>
     </insert>
+
+    <insert id="reply" parameterType="com.riffhub.pojo.Reply">
+        insert into replies(post_id, user_id, content, create_time)
+        values (#{postId}, #{userId}, #{content}, now())
+    </insert>
 </mapper>

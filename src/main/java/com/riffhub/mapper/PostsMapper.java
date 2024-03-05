@@ -10,4 +10,5 @@ import java.util.List;
 public interface PostsMapper {
     void add(Post post);
     void relatedTagsToPost(List<PostTags> list);
+    void reply(Integer postId,Integer userId, String content);
 }

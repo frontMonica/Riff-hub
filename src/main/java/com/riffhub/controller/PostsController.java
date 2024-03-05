@@ -22,4 +22,11 @@ public class PostsController {
         return postsService.publish(params);
     }
 
+    @PostMapping("/reply")
+    public Result reply(Integer postId, String content) {
+        postsService.reply(postId, content);
+        return Result.success();
+    }
+
+
 }

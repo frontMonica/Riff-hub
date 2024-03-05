@@ -10,4 +10,5 @@ public interface PostsService {
     Result publish(Map<String, String> posts);
 
     void relatedTagsToPost(List<PostTags> list);
+    void reply(Integer postId, String content);
 }
