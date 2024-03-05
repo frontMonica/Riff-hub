@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.riffhub.mapper.TagMapper">
+    <insert id="add" parameterType="java.util.List">
+        INSERT INTO tags (tag_name)
+        VALUES
+        <foreach collection="tags" item="item" separator=",">
+            (#{item})
+        </foreach>
+    </insert>
+
+    <select id="findByTagName" resultType="com.riffhub.pojo.Tag">
+        SELECT * FROM tags WHERE tag_name=#{tagName}
+    </select>
+
+    <select id="batchFindByTagName" parameterType="java.util.List" resultType="com.riffhub.pojo.Tag">
+        SELECT * FROM tags
+        WHERE tag_name IN
+        <foreach collection="list" item="name" open="(" separator="," close=")">
+            #{name}
+        </foreach>
+    </select>
+
+</mapper>

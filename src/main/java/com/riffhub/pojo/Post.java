@@ -1,19 +1,19 @@
 package com.riffhub.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
-public class User {
+public class Post {
     private Integer id;
-    private String username;
-    @JsonIgnore
-    private String password;
+    private Integer userId;
     private String nickname;
-    private Boolean diaryHidden;
-    private String avatarUrl;
+    private String title;
+    private String content;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }
