@@ -20,5 +20,9 @@
         values (#{postId}, #{userId}, #{content}, now())
     </insert>
 
+    <delete id="deleteReply" parameterType="com.riffhub.pojo.Reply">
+        DELETE FROM replies
+        WHERE id = #{id}
+    </delete>
 
 </mapper>

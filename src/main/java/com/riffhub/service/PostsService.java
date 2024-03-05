@@ -11,4 +11,6 @@ public interface PostsService {
 
     void relatedTagsToPost(List<PostTags> list);
     void reply(Integer postId, String content);
+
+    void deleteReply(Integer replyId);
 }

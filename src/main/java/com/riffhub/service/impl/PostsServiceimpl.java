@@ -73,4 +73,9 @@ public class PostsServiceimpl implements PostsService {
         Integer userId = (Integer) userInfo.get("id");
         postsMapper.reply(postId, userId, content);
     }
+
+    @Override
+    public void deleteReply(Integer replyId) {
+        postsMapper.deleteReply(replyId);
+    }
 }
