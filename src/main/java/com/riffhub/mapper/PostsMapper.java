@@ -2,6 +2,7 @@ package com.riffhub.mapper;
 
 import com.riffhub.pojo.Post;
 import com.riffhub.pojo.PostTags;
+import com.riffhub.pojo.Reply;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface PostsMapper {
     void reply(Integer postId,Integer userId, String content);
     void deleteReply(Integer replyId);
 
+    Reply findByReplyId(Integer ReplyId);
 }

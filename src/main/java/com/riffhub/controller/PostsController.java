@@ -1,5 +1,6 @@
 package com.riffhub.controller;
 
+import com.riffhub.pojo.Reply;
 import com.riffhub.pojo.Result;
 import com.riffhub.service.PostsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public class PostsController {
 
     @DeleteMapping("/reply/delete")
     public Result deleteReply(Integer replyId) {
+        Reply reply = postsService.findByReplyId(replyId);
+        if (reply == null){
+            return Result.error("Reply does not exist!");
+        }
         postsService.deleteReply(replyId);
         return Result.success();
     }

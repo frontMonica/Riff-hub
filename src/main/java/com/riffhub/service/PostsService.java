@@ -1,6 +1,7 @@
 package com.riffhub.service;
 
 import com.riffhub.pojo.PostTags;
+import com.riffhub.pojo.Reply;
 import com.riffhub.pojo.Result;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface PostsService {
     void reply(Integer postId, String content);
 
     void deleteReply(Integer replyId);
+
+    Reply findByReplyId(Integer replyId);
 }

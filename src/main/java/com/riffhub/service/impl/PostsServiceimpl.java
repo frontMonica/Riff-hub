@@ -1,10 +1,7 @@
 package com.riffhub.service.impl;
 
 import com.riffhub.mapper.PostsMapper;
-import com.riffhub.pojo.Post;
-import com.riffhub.pojo.PostTags;
-import com.riffhub.pojo.Result;
-import com.riffhub.pojo.Tag;
+import com.riffhub.pojo.*;
 import com.riffhub.service.PostsService;
 import com.riffhub.service.TagService;
 import com.riffhub.utils.ThreadLocalUtil;
@@ -74,8 +71,16 @@ public class PostsServiceimpl implements PostsService {
         postsMapper.reply(postId, userId, content);
     }
 
+
+    @Override
+    public Reply findByReplyId(Integer replyID){
+       return postsMapper.findByReplyId(replyID);
+    }
+
     @Override
     public void deleteReply(Integer replyId) {
         postsMapper.deleteReply(replyId);
     }
+
+
 }

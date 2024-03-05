@@ -24,5 +24,8 @@
         DELETE FROM replies
         WHERE id = #{id}
     </delete>
+    <select id="findByReplyId" resultType="com.riffhub.pojo.Reply">
+        SELECT * FROM replies WHERE id=#{id}
+    </select>
 
 </mapper>
