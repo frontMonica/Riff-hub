@@ -1,10 +1,15 @@
 package com.riffhub.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.riffhub.mapper.PostsMapper;
 import com.riffhub.pojo.*;
 import com.riffhub.service.PostsService;
 import com.riffhub.service.TagService;
+import com.riffhub.type.GetPostListParams;
+import com.riffhub.type.PostList;
 import com.riffhub.utils.ThreadLocalUtil;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,5 +87,27 @@ public class PostsServiceimpl implements PostsService {
         postsMapper.deleteReply(replyId);
     }
 
+    @Override
+    public List<Post> getAllPostList(Integer userId, String title) {
+        return postsMapper.getAllPostList(userId,title);
+    }
+
+    @Override
+    public PostList getPostList(GetPostListParams params) {
+
+        PostList postList = new PostList();
+
+        Integer page = params.getPage();
+        Integer pageSize = params.getPageSize();
+
+        List<Post> list = postsMapper.getPostList(params.getUserId(), params.getTitle(),page,pageSize);
+
+        List<Post> allList = postsMapper.getAllPostList(params.getUserId(), params.getTitle());
+
+        postList.setTotal(allList.size());
+        postList.setPostList(list);
+
+        return postList;
+    }
 
 }

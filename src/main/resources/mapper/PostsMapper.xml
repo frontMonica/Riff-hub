@@ -28,4 +28,20 @@
         SELECT * FROM replies WHERE id=#{id}
     </select>
 
+    <select id="getPostList" parameterType="com.riffhub.type.GetPostListParams" resultType="com.riffhub.pojo.Post">
+        SELECT * FROM Posts
+        WHERE
+            (#{title} IS NULL OR title LIKE CONCAT('%', #{title}, '%'))
+          AND
+            (#{userId} IS NULL OR user_id = #{userId})
+            limit #{page},#{pageSize}
+    </select>
+    <select id="getAllPostList" parameterType="com.riffhub.type.GetPostListParams" resultType="com.riffhub.pojo.Post">
+        SELECT * FROM Posts
+        WHERE
+            (#{title} IS NULL OR title LIKE CONCAT('%', #{title}, '%'))
+          AND
+            (#{userId} IS NULL OR user_id = #{userId})
+    </select>
+
 </mapper>

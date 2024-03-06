@@ -1,11 +1,15 @@
 package com.riffhub.controller;
 
+import com.riffhub.pojo.Post;
 import com.riffhub.pojo.Reply;
 import com.riffhub.pojo.Result;
 import com.riffhub.service.PostsService;
+import com.riffhub.type.GetPostListParams;
+import com.riffhub.type.PostList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,11 +32,15 @@ public class PostsController {
     @DeleteMapping("/reply/delete")
     public Result deleteReply(Integer replyId) {
         Reply reply = postsService.findByReplyId(replyId);
-        if (reply == null){
+        if (reply == null) {
             return Result.error("Reply does not exist!");
         }
         postsService.deleteReply(replyId);
         return Result.success();
+    }
+    @PostMapping("/")
+    public Result<PostList> getPostList(@RequestBody GetPostListParams params) {
+        return Result.success(postsService.getPostList(params));
     }
 
 

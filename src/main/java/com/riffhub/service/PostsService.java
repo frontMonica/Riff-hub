@@ -1,8 +1,11 @@
 package com.riffhub.service;
 
+import com.riffhub.pojo.Post;
 import com.riffhub.pojo.PostTags;
 import com.riffhub.pojo.Reply;
 import com.riffhub.pojo.Result;
+import com.riffhub.type.GetPostListParams;
+import com.riffhub.type.PostList;
 
 import java.util.List;
 import java.util.Map;
@@ -16,4 +19,8 @@ public interface PostsService {
     void deleteReply(Integer replyId);
 
     Reply findByReplyId(Integer replyId);
+
+    PostList getPostList(GetPostListParams params);
+
+    List<Post> getAllPostList(Integer userId, String title);
 }
