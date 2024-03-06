@@ -9,6 +9,7 @@ import com.riffhub.service.TagService;
 import com.riffhub.type.GetPostListParams;
 import com.riffhub.type.PostList;
 import com.riffhub.utils.ThreadLocalUtil;
+import jakarta.validation.constraints.Max;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,8 +89,8 @@ public class PostsServiceimpl implements PostsService {
     }
 
     @Override
-    public List<Post> getAllPostList(Integer userId, String title) {
-        return postsMapper.getAllPostList(userId,title);
+    public List<Post> getAllPostList(Integer userId, String title,Integer tagId, List<Integer> postIdList) {
+        return postsMapper.getAllPostList(userId,title,tagId,postIdList);
     }
 
     @Override
@@ -100,9 +101,21 @@ public class PostsServiceimpl implements PostsService {
         Integer page = params.getPage();
         Integer pageSize = params.getPageSize();
 
-        List<Post> list = postsMapper.getPostList(params.getUserId(), params.getTitle(),page,pageSize);
+        Integer tagId = params.getTagId();
 
-        List<Post> allList = postsMapper.getAllPostList(params.getUserId(), params.getTitle());
+        if(tagId != null) {
+            List<PostTags> postTagsList = postsMapper.findPostByTag(tagId);
+            List<Integer> idList = new ArrayList<>();
+
+            for(PostTags postTag : postTagsList) {
+                idList.add(postTag.getPostId());
+            }
+            params.setPostIdList(idList);
+        }
+
+        List<Post> list = postsMapper.getPostList(params.getUserId(), params.getTitle(),params.getTagId(),params.getPostIdList(),page,pageSize);
+
+        List<Post> allList = postsMapper.getAllPostList(params.getUserId(), params.getTitle(),params.getTagId(),params.getPostIdList());
 
         postList.setTotal(allList.size());
         postList.setPostList(list);

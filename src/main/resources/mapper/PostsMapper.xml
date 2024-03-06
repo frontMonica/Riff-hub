@@ -33,15 +33,31 @@
         WHERE
             (#{title} IS NULL OR title LIKE CONCAT('%', #{title}, '%'))
           AND
+        <if test="tagId != null">
+            id IN
+            <foreach item="item" index="index" collection="postIdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        AND
             (#{userId} IS NULL OR user_id = #{userId})
             limit #{page},#{pageSize}
     </select>
     <select id="getAllPostList" parameterType="com.riffhub.type.GetPostListParams" resultType="com.riffhub.pojo.Post">
         SELECT * FROM Posts
         WHERE
+        <if test="tagId != null">
+            id IN
+            <foreach item="item" index="index" collection="postIdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+            AND
             (#{title} IS NULL OR title LIKE CONCAT('%', #{title}, '%'))
           AND
             (#{userId} IS NULL OR user_id = #{userId})
     </select>
-
+    <select id="findPostByTag"  resultType="com.riffhub.pojo.PostTags">
+        SELECT * FROM PostTags WHERE tag_id=#{tagId}
+    </select>
 </mapper>

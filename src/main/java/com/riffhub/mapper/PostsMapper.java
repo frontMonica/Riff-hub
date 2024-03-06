@@ -17,7 +17,9 @@ public interface PostsMapper {
 
     Reply findByReplyId(Integer ReplyId);
 
-    List<Post> getPostList(Integer userId, String title, Integer page, Integer pageSize);
+    List<Post> getPostList(Integer userId, String title,Integer tagId, List<Integer> postIdList, Integer page, Integer pageSize);
 
-    List<Post> getAllPostList(Integer userId, String title);
+    List<Post> getAllPostList(Integer userId, String title,Integer tagId, List<Integer> postIdList);
+
+    List<PostTags> findPostByTag(Integer tagId);
 }
