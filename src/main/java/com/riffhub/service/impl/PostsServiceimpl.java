@@ -2,6 +2,8 @@ package com.riffhub.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.riffhub.Enum.GetPostListParamsEnum;
 import com.riffhub.mapper.PostsMapper;
 import com.riffhub.pojo.*;
 import com.riffhub.service.PostsService;
@@ -89,36 +91,45 @@ public class PostsServiceimpl implements PostsService {
     }
 
     @Override
-    public List<Post> getAllPostList(Integer userId, String title,Integer tagId, List<Integer> postIdList) {
-        return postsMapper.getAllPostList(userId,title,tagId,postIdList);
-    }
-
-    @Override
     public PostList getPostList(GetPostListParams params) {
+
+        GetPostListParamsEnum searchType = params.getSearchType();
+
+        List<PostTags> postTagsList = new ArrayList<>();
+        if(searchType == GetPostListParamsEnum.TAG_ID) {
+            postTagsList = postsMapper.findPostByTag(params.getTagId());
+            System.out.println(postTagsList);
+        }
 
         PostList postList = new PostList();
 
         Integer page = params.getPage();
         Integer pageSize = params.getPageSize();
+        PageHelper.startPage(page,pageSize);
 
-        Integer tagId = params.getTagId();
-
-        if(tagId != null) {
-            List<PostTags> postTagsList = postsMapper.findPostByTag(tagId);
-            List<Integer> idList = new ArrayList<>();
-
-            for(PostTags postTag : postTagsList) {
-                idList.add(postTag.getPostId());
-            }
-            params.setPostIdList(idList);
+        List<Post> list = new ArrayList<>();
+        switch (searchType) {
+            case TITLE:
+                list = postsMapper.findPostByTitle(params.getTitle());
+                break;
+            case USER_ID:
+                list = postsMapper.findPostByUserId(params.getUserId());
+                break;
+            case TAG_ID:
+                if(!postTagsList.isEmpty()) {
+                    list = postsMapper.findPostByPostId(postTagsList);
+                }
+                break;
+            default:
+                list = postsMapper.getPostList();
+                break;
         }
 
-        List<Post> list = postsMapper.getPostList(params.getUserId(), params.getTitle(),params.getTagId(),params.getPostIdList(),page,pageSize);
+        PageInfo<Post> p = new PageInfo<>(list);
+        System.out.println(p);
 
-        List<Post> allList = postsMapper.getAllPostList(params.getUserId(), params.getTitle(),params.getTagId(),params.getPostIdList());
-
-        postList.setTotal(allList.size());
-        postList.setPostList(list);
+        postList.setTotal(p.getTotal());
+        postList.setPostList(p.getList());
 
         return postList;
     }

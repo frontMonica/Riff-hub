@@ -22,5 +22,4 @@ public interface PostsService {
 
     PostList getPostList(GetPostListParams params);
 
-    List<Post> getAllPostList(Integer userId, String title,Integer tagId, List<Integer> postIdList);
 }

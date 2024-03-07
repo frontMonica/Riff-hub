@@ -1,5 +1,7 @@
 package com.riffhub.type;
 
+import com.riffhub.Enum.GetPostListParamsEnum;
+import com.riffhub.pojo.PostTags;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
@@ -15,7 +17,9 @@ public class GetPostListParams {
     @Nullable
     private Integer tagId;
     @Nullable
-    private List<Integer> postIdList = new ArrayList<>();
+    private List<PostTags> postIdList = new ArrayList<>();
+
+    private GetPostListParamsEnum searchType;
     private Integer pageSize;
     private Integer page;
 }

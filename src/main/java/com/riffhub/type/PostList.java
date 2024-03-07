@@ -7,6 +7,6 @@ import java.util.List;
 
 @Data
 public class PostList {
-    private Integer total;
+    private Long total;
     private List<Post> postList;
 }

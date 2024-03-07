@@ -43,5 +43,4 @@ public class PostsController {
         return Result.success(postsService.getPostList(params));
     }
 
-
 }

@@ -14,12 +14,10 @@ public interface PostsMapper {
     void relatedTagsToPost(List<PostTags> list);
     void reply(Integer postId,Integer userId, String content);
     void deleteReply(Integer replyId);
-
     Reply findByReplyId(Integer ReplyId);
-
-    List<Post> getPostList(Integer userId, String title,Integer tagId, List<Integer> postIdList, Integer page, Integer pageSize);
-
-    List<Post> getAllPostList(Integer userId, String title,Integer tagId, List<Integer> postIdList);
-
+    List<Post> getPostList();
+    List<Post> findPostByUserId(Integer userId);
+    List<Post> findPostByTitle(String title);
+    List<Post> findPostByPostId(List<PostTags> postTagsList);
     List<PostTags> findPostByTag(Integer tagId);
 }

@@ -7,6 +7,7 @@
         values (#{content}, #{title}, #{nickname},#{userId}, now(), now())
     </insert>
 
+
     <insert id="relatedTagsToPost" parameterType="java.util.List">
         INSERT INTO PostTags (tag_id,post_id)
         VALUES
@@ -15,47 +16,38 @@
         </foreach>
     </insert>
 
+
     <insert id="reply" parameterType="com.riffhub.pojo.Reply">
         insert into replies(post_id, user_id, content, create_time)
         values (#{postId}, #{userId}, #{content}, now())
     </insert>
 
+
     <delete id="deleteReply" parameterType="com.riffhub.pojo.Reply">
         DELETE FROM replies
         WHERE id = #{id}
     </delete>
+
+
     <select id="findByReplyId" resultType="com.riffhub.pojo.Reply">
         SELECT * FROM replies WHERE id=#{id}
     </select>
 
-    <select id="getPostList" parameterType="com.riffhub.type.GetPostListParams" resultType="com.riffhub.pojo.Post">
+
+    <select id="getPostList" resultType="com.riffhub.pojo.Post">
         SELECT * FROM Posts
-        WHERE
-            (#{title} IS NULL OR title LIKE CONCAT('%', #{title}, '%'))
-          AND
-        <if test="tagId != null">
-            id IN
-            <foreach item="item" index="index" collection="postIdList" open="(" separator="," close=")">
-                #{item}
-            </foreach>
-        </if>
-        AND
-            (#{userId} IS NULL OR user_id = #{userId})
-            limit #{page},#{pageSize}
     </select>
-    <select id="getAllPostList" parameterType="com.riffhub.type.GetPostListParams" resultType="com.riffhub.pojo.Post">
-        SELECT * FROM Posts
-        WHERE
-        <if test="tagId != null">
-            id IN
-            <foreach item="item" index="index" collection="postIdList" open="(" separator="," close=")">
-                #{item}
-            </foreach>
-        </if>
-            AND
-            (#{title} IS NULL OR title LIKE CONCAT('%', #{title}, '%'))
-          AND
-            (#{userId} IS NULL OR user_id = #{userId})
+    <select id="findPostByUserId" resultType="com.riffhub.pojo.Post">
+        SELECT * FROM Posts WHERE user_id=#{userId}
+    </select>
+    <select id="findPostByTitle" resultType="com.riffhub.pojo.Post">
+        SELECT * FROM Posts WHERE title LIKE CONCAT('%', #{title}, '%')
+    </select>
+    <select id="findPostByPostId" resultType="com.riffhub.pojo.Post">
+        SELECT * FROM Posts WHERE id IN
+        <foreach item="item" index="index" collection="postTagsList" open="(" separator="," close=")">
+            #{item.postId}
+        </foreach>
     </select>
     <select id="findPostByTag"  resultType="com.riffhub.pojo.PostTags">
         SELECT * FROM PostTags WHERE tag_id=#{tagId}
