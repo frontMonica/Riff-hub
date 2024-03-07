@@ -22,4 +22,8 @@ public interface PostsService {
 
     PostList getPostList(GetPostListParams params);
 
+    void deletePost(Integer postID);
+
+    Post findByPostId(Integer postId);
+
 }

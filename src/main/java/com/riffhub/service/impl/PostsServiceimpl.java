@@ -134,4 +134,15 @@ public class PostsServiceimpl implements PostsService {
         return postList;
     }
 
+    @Override
+    public Post findByPostId(Integer postId){
+        return postsMapper.findByPostId(postId);
+    }
+
+    @Override
+    public void deletePost(Integer postId) {
+        postsMapper.deletePostTag(postId);
+        postsMapper.deletePost(postId);
+    }
+
 }

@@ -4,7 +4,6 @@ import com.riffhub.pojo.Post;
 import com.riffhub.pojo.PostTags;
 import com.riffhub.pojo.Reply;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
@@ -20,4 +19,8 @@ public interface PostsMapper {
     List<Post> findPostByTitle(String title);
     List<Post> findPostByPostId(List<PostTags> postTagsList);
     List<PostTags> findPostByTag(Integer tagId);
+    void deletePost(Integer postId);
+    Post findByPostId(Integer postId);
+
+    void deletePostTag(Integer PostId);
 }

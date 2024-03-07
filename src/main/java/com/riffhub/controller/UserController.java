@@ -8,6 +8,7 @@ import com.riffhub.utils.JwtUtil;
 import com.riffhub.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,4 +50,10 @@ public class UserController {
         }
         return Result.error("error");
     }
+
+   /* @PostMapping("/update")
+    public Result update(@RequestBody Map<String,String> params){
+        return Result.error(params);
+    }/*
+    */
 }

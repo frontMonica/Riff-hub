@@ -52,4 +52,20 @@
     <select id="findPostByTag"  resultType="com.riffhub.pojo.PostTags">
         SELECT * FROM PostTags WHERE tag_id=#{tagId}
     </select>
+
+    <delete id="deletePost" parameterType="com.riffhub.pojo.Post">
+        DELETE FROM posts
+        WHERE id = #{postId}
+    </delete>
+
+    <select id="findByPostId" resultType="com.riffhub.pojo.Post">
+        SELECT * FROM posts WHERE id=#{id}
+    </select>
+
+    <delete id="deletePostTag" parameterType="com.riffhub.pojo.Post">
+        DELETE FROM posttags
+        WHERE post_id = #{postId}
+    </delete>
+
+
 </mapper>

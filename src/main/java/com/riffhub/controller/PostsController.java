@@ -42,5 +42,14 @@ public class PostsController {
     public Result<PostList> getPostList(@RequestBody GetPostListParams params) {
         return Result.success(postsService.getPostList(params));
     }
+    @DeleteMapping("/delete")
+    public Result deletePost(Integer postId){
+        Post post= postsService.findByPostId(postId);
+        if (post == null) {
+            return Result.error("Post does not exist!");
+        }
+        postsService.deletePost(postId);
+        return Result.success();
+    }
 
 }
