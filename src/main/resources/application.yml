@@ -3,7 +3,17 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/riff_hub
     username: root
+<<<<<<< Updated upstream
     password: 12345678
+=======
+    password: reandnagi1
+  security:
+    oauth2:
+      authorizationserver:
+        endpoint:
+          oidc:
+            logout-uri: /logout
+>>>>>>> Stashed changes
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.riffhub.mapper.DiaryMapper">
+    <insert id="add" parameterType="com.riffhub.pojo.Diary">
+        insert into diaries(user_id, title, diary_content, is_hidden, create_time, update_time)
+        values (#{userId}, #{title}, #{diaryContent}, #{isHidden}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="com.riffhub.pojo.Diary">
+        UPDATE diaries
+        <set>
+            <if test="isHidden != null">is_hidden = #{isHidden},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="diaryContent != null">diary_content = #{diaryContent},</if>
+            update_time = now()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>
