@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.riffhub.mapper.FanMapper">
+    <insert id="attention">
+        insert into fans(fan_id, person_id)
+        values (#{userId}, #{attentionId})
+    </insert>
+
+    <delete id="cancelAttention">
+        DELETE FROM fans
+        WHERE fan_id = #{userId}
+        AND person_id = #{cancelAttentionId}
+    </delete>
+
+</mapper>

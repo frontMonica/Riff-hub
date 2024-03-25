@@ -51,19 +51,19 @@ public class UserController {
         }
         return Result.error("error");
     }
-<<<<<<< Updated upstream
+
 
    /* @PostMapping("/update")
     public Result update(@RequestBody Map<String,String> params){
         return Result.error(params);
     }/*
     */
-=======
+
 //
 //    @PostMapping("/logout")
 //    public Result logout() {
 //        SecurityContextHolder.clearContext();
 //        return Result.success();
 //    }
->>>>>>> Stashed changes
+
 }
