@@ -6,6 +6,8 @@ import com.riffhub.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/diary")
 public class DiaryController {
@@ -21,6 +23,17 @@ public class DiaryController {
     @PutMapping("/update")
     public Result update(@RequestBody Diary diary) {
         diaryService.update(diary);
+        return Result.success();
+    }
+
+    @GetMapping("/")
+    public Result<List<Diary>> getList(Integer userId) {
+        return Result.success(diaryService.getList(userId));
+    }
+
+    @DeleteMapping("/delete")
+    public Result delete(Integer diaryId) {
+        diaryService.delete(diaryId);
         return Result.success();
     }
 }

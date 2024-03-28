@@ -18,4 +18,17 @@
         WHERE id = #{id}
     </update>
 
+    <select id="getNotHiddenList" resultType="com.riffhub.pojo.Diary">
+        SELECT * FROM diaries WHERE user_id=#{userId} AND is_hidden=1
+    </select>
+
+    <select id="getAllList" resultType="com.riffhub.pojo.Diary">
+        SELECT * FROM diaries WHERE user_id=#{userId}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM diaries
+        WHERE id = #{diaryId}
+    </delete>
+
 </mapper>
