@@ -3,8 +3,8 @@
 
 <mapper namespace="com.riffhub.mapper.FanMapper">
     <insert id="attention">
-        insert into fans(fan_id, person_id)
-        values (#{userId}, #{attentionId})
+        insert into fans(fan_id, person_id, username, nickname, avatar_url)
+        values (#{userId}, #{attentionId}, #{username}, #{nickname},#{avatar})
     </insert>
 
     <delete id="cancelAttention">

@@ -1,6 +1,8 @@
 package com.riffhub.service.impl;
 
 import com.riffhub.mapper.FanMapper;
+import com.riffhub.mapper.UserMapper;
+import com.riffhub.pojo.User;
 import com.riffhub.service.FanService;
 import com.riffhub.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +15,20 @@ public class FanServiceImpl implements FanService {
     @Autowired
     private FanMapper fanMapper;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     public void attention(Integer attentionId, Boolean isAttention) {
         Map<String,Object> userInfo = ThreadLocalUtil.get();
         Integer userId = (Integer) userInfo.get("id");
+        String username = (String) userInfo.get("username");
+
+        User user = userMapper.findByUsername(username);
+        String avatar = (String) user.getAvatarUrl();
+        String nickname = (String) user.getNickname();
         if(isAttention) {
-            fanMapper.attention(attentionId, userId);
+            fanMapper.attention(attentionId, userId, username, nickname, avatar);
         } else {
             fanMapper.cancelAttention(attentionId, userId);
         }
