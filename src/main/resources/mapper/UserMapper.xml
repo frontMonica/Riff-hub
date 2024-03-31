@@ -10,4 +10,12 @@
     <select id="findByUsername" resultType="com.riffhub.pojo.User">
         SELECT * FROM users WHERE username=#{username}
     </select>
+
+    <select id="findByBatchId" parameterType="java.util.List" resultType="com.riffhub.pojo.User">
+        SELECT * FROM users
+        WHERE id IN
+        <foreach collection="idList" item="name" open="(" separator="," close=")">
+            #{name}
+        </foreach>
+    </select>
 </mapper>

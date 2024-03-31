@@ -2,12 +2,15 @@ package com.riffhub.service.impl;
 
 import com.riffhub.mapper.FanMapper;
 import com.riffhub.mapper.UserMapper;
+import com.riffhub.pojo.Fan;
 import com.riffhub.pojo.User;
 import com.riffhub.service.FanService;
 import com.riffhub.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -32,5 +35,22 @@ public class FanServiceImpl implements FanService {
         } else {
             fanMapper.cancelAttention(attentionId, userId);
         }
+    }
+
+    @Override
+    public List<Fan> getFansList(Integer userId) {
+        return fanMapper.getFansList(userId);
+    }
+
+    @Override
+    public List<User> getAttentionList(Integer attentionId) {
+        List<Fan> attentionList = fanMapper.getAttentionList(attentionId);
+        List<Integer> attentionIdList = new ArrayList<>();
+
+        for (Fan attention : attentionList) {
+            attentionIdList.add(attention.getPersonId());
+        }
+
+        return userMapper.findByBatchId(attentionIdList);
     }
 }

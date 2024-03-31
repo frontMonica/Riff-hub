@@ -13,4 +13,12 @@
         AND person_id = #{cancelAttentionId}
     </delete>
 
+    <select id="getFansList" resultType="com.riffhub.pojo.Fan">
+        SELECT * FROM fans WHERE person_id=#{personId}
+    </select>
+
+    <select id="getAttentionList" resultType="com.riffhub.pojo.Fan">
+        SELECT * FROM fans WHERE fan_id=#{attentionId}
+    </select>
+
 </mapper>
