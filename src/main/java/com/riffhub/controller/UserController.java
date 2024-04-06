@@ -35,13 +35,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Result login(String username, String password) {
+    public Result login(@RequestBody Map<String, String> params) {
+        String username = params.get("username");
+        String password = params.get("password");
+
         User user = userService.findByUsername(username);
         if(user == null) {
             return Result.error("username doesn't exist");
         }
         String md5Password = user.getPassword();
-
         if(Md5Util.getMD5String(password).equals(md5Password)) {
             Map<String, Object> claims = new HashMap<>();
             claims.put("id", user.getId());
@@ -49,7 +51,7 @@ public class UserController {
             String token = JwtUtil.genToken(claims);
             return  Result.success(token);
         }
-        return Result.error("error");
+        return Result.error("incorrect password!");
     }
 
 
