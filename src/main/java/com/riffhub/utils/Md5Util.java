@@ -1,6 +1,8 @@
 package com.riffhub.utils;
 
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -28,7 +30,7 @@ public class Md5Util {
      * @return
      */
     public static String getMD5String(String s) {
-        return getMD5String(s.getBytes());
+        return getMD5String(s.getBytes(StandardCharsets.UTF_8));
     }
 
     /**
@@ -45,8 +47,15 @@ public class Md5Util {
 
 
     public static String getMD5String(byte[] bytes) {
-        messagedigest.update(bytes);
-        return bufferToHex(messagedigest.digest());
+        try {
+            MessageDigest a = MessageDigest.getInstance("MD5");
+            a.update(bytes);
+            return bufferToHex(a.digest());
+        } catch (NoSuchAlgorithmException nsaex) {
+            System.err.println(Md5Util.class.getName() + "初始化失败，MessageDigest不支持MD5Util。");
+            nsaex.printStackTrace();
+        }
+        return null;
     }
 
     private static String bufferToHex(byte bytes[]) {

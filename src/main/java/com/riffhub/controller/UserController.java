@@ -35,16 +35,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Result login(@RequestBody Map<String, String> params) {
-        String username = params.get("username");
-        String password = params.get("password");
-
+    public Result login(String username, String password) {
         User user = userService.findByUsername(username);
         if(user == null) {
             return Result.error("username doesn't exist");
         }
+
         String md5Password = user.getPassword();
-        if(Md5Util.getMD5String(password).equals(md5Password)) {
+        String md5 = Md5Util.getMD5String(password);
+        if(md5.equals(md5Password)) {
             Map<String, Object> claims = new HashMap<>();
             claims.put("id", user.getId());
             claims.put("username",user.getUsername());
