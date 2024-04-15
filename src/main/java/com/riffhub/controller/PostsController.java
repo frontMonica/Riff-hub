@@ -3,9 +3,12 @@ package com.riffhub.controller;
 import com.riffhub.pojo.Post;
 import com.riffhub.pojo.Reply;
 import com.riffhub.pojo.Result;
+import com.riffhub.pojo.User;
 import com.riffhub.service.PostsService;
 import com.riffhub.type.GetPostListParams;
 import com.riffhub.type.PostList;
+import com.riffhub.utils.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/post")
+@CrossOrigin(origins = "http://localhost:5173")
 public class PostsController {
     @Autowired
     private PostsService postsService;
@@ -39,8 +43,10 @@ public class PostsController {
         return Result.success();
     }
     @PostMapping("/")
-    public Result<PostList> getPostList(@RequestBody GetPostListParams params) {
-        return Result.success(postsService.getPostList(params));
+    public Result<PostList> getPostList(@RequestBody GetPostListParams params, HttpServletRequest request) {
+        Map<String, Object> userInfo = JwtUtil.getLoginUserInfo(request);
+        Integer userId = (Integer) userInfo.get("id");
+        return Result.success(postsService.getPostList(userId, params));
     }
     @DeleteMapping("/delete")
     public Result deletePost(Integer postId){
@@ -49,6 +55,12 @@ public class PostsController {
             return Result.error("Post does not exist!");
         }
         postsService.deletePost(postId);
+        return Result.success();
+    }
+
+    @PostMapping("/like")
+    public  Result likePost(Integer postId) {
+        postsService.likePost(postId);
         return Result.success();
     }
 

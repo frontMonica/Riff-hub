@@ -91,7 +91,7 @@ public class PostsServiceimpl implements PostsService {
     }
 
     @Override
-    public PostList getPostList(GetPostListParams params) {
+    public PostList getPostList(Integer userId, GetPostListParams params) {
 
         GetPostListParamsEnum searchType = params.getSearchType();
 
@@ -126,10 +126,23 @@ public class PostsServiceimpl implements PostsService {
         }
 
         PageInfo<Post> p = new PageInfo<>(list);
-        System.out.println(p);
 
         postList.setTotal(p.getTotal());
         postList.setPostList(p.getList());
+
+        for(Post post : postList.getPostList()) {
+            Integer postId = post.getId();
+            Integer likeCount = postsMapper.getLikeCount(postId);
+            Integer replyCount = postsMapper.getReplyCount(postId);
+            Like likeUser = postsMapper.findByUseId(userId, postId);
+            post.setLikeCount(likeCount);
+            post.setReplyCount(replyCount);
+            if (likeUser == null) {
+                post.setIsLike(false);
+            } else {
+                post.setIsLike(true);
+            }
+        }
 
         return postList;
     }
@@ -143,6 +156,13 @@ public class PostsServiceimpl implements PostsService {
     public void deletePost(Integer postId) {
         postsMapper.deletePostTag(postId);
         postsMapper.deletePost(postId);
+    }
+
+    @Override
+    public void likePost(Integer postId) {
+        Map<String,Object> userInfo = ThreadLocalUtil.get();
+        Integer userId = (Integer) userInfo.get("id");
+        postsMapper.likePost(postId, userId);
     }
 
 }

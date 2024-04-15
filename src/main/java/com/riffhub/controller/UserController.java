@@ -6,6 +6,7 @@ import com.riffhub.pojo.User;
 import com.riffhub.service.UserService;
 import com.riffhub.utils.JwtUtil;
 import com.riffhub.utils.Md5Util;
+import com.riffhub.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,6 +49,8 @@ public class UserController {
             claims.put("id", user.getId());
             claims.put("username",user.getUsername());
             String token = JwtUtil.genToken(claims);
+            User userinfo = ThreadLocalUtil.get();
+            System.out.println(userinfo);
             return  Result.success(token);
         }
         return Result.error("incorrect password!");

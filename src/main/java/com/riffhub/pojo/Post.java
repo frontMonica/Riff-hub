@@ -1,5 +1,6 @@
 package com.riffhub.pojo;
 
+import jakarta.annotation.Nullable;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,6 +15,11 @@ public class Post {
     private String nickname;
     private String title;
     private String content;
+    @Nullable
+    private Integer likeCount;
+    @Nullable
+    private Integer replyCount;
+    private Boolean isLike;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

@@ -67,5 +67,21 @@
         WHERE post_id = #{postId}
     </delete>
 
+    <insert id="likePost">
+        insert into likes(post_id, user_id, like_time)
+        values (#{postId}, #{userId}, now())
+    </insert>
+
+    <select id="getLikeCount" resultType="int">
+        SELECT COUNT(*) AS count FROM likes WHERE post_id = #{postId};
+    </select>
+
+    <select id="getReplyCount" resultType="int">
+        SELECT COUNT(*) AS count FROM replies WHERE post_id = #{postId};
+    </select>
+
+    <select id="findByUseId" resultType="com.riffhub.pojo.Like">
+        SELECT * FROM likes WHERE user_id=#{userId} AND post_id=#{postId}
+    </select>
 
 </mapper>

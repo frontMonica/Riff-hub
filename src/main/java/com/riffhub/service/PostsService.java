@@ -20,10 +20,12 @@ public interface PostsService {
 
     Reply findByReplyId(Integer replyId);
 
-    PostList getPostList(GetPostListParams params);
+    PostList getPostList(Integer userId, GetPostListParams params);
 
     void deletePost(Integer postID);
 
     Post findByPostId(Integer postId);
+
+    void likePost(Integer postId);
 
 }

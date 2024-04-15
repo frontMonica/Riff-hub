@@ -1,5 +1,6 @@
 package com.riffhub.mapper;
 
+import com.riffhub.pojo.Like;
 import com.riffhub.pojo.Post;
 import com.riffhub.pojo.PostTags;
 import com.riffhub.pojo.Reply;
@@ -23,4 +24,12 @@ public interface PostsMapper {
     Post findByPostId(Integer postId);
 
     void deletePostTag(Integer PostId);
+
+    void likePost(Integer postId, Integer userId);
+
+    Integer getLikeCount(Integer postId);
+
+    Integer getReplyCount(Integer postId);
+
+    Like findByUseId(Integer userId, Integer postId);
 }

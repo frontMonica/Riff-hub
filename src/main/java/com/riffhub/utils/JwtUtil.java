@@ -2,13 +2,14 @@ package com.riffhub.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Date;
 import java.util.Map;
 
 public class JwtUtil {
 
-    private static final String KEY = "itheima";
+    private static final String KEY = "riffhub";
 	
 	//接收业务数据,生成token并返回
     public static String genToken(Map<String, Object> claims) {
@@ -25,6 +26,15 @@ public class JwtUtil {
                 .verify(token)
                 .getClaim("claims")
                 .asMap();
+    }
+
+    public static Map<String, Object> getLoginUserInfo(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+        Map<String, Object> info = JwtUtil.parseToken(token);
+        return info;
     }
 
 }
