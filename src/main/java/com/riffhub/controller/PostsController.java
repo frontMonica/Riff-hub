@@ -59,8 +59,10 @@ public class PostsController {
     }
 
     @PostMapping("/like")
-    public  Result likePost(Integer postId) {
-        postsService.likePost(postId);
+    public Result likePost(Integer postId,Boolean isLike , HttpServletRequest request) {
+        Map<String, Object> userInfo = JwtUtil.getLoginUserInfo(request);
+        Integer userId = (Integer) userInfo.get("id");
+        postsService.likePost(userId, postId, isLike);
         return Result.success();
     }
 

@@ -72,6 +72,12 @@
         values (#{postId}, #{userId}, now())
     </insert>
 
+    <delete id="dislikePost">
+        DELETE FROM likes
+        WHERE post_id = #{postId} AND user_id = #{userId}
+    </delete>
+
+
     <select id="getLikeCount" resultType="int">
         SELECT COUNT(*) AS count FROM likes WHERE post_id = #{postId};
     </select>

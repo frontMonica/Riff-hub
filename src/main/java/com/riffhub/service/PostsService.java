@@ -26,6 +26,6 @@ public interface PostsService {
 
     Post findByPostId(Integer postId);
 
-    void likePost(Integer postId);
+    void likePost(Integer userId, Integer postId, Boolean isLike);
 
 }

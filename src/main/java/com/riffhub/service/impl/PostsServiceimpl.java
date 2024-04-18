@@ -98,7 +98,6 @@ public class PostsServiceimpl implements PostsService {
         List<PostTags> postTagsList = new ArrayList<>();
         if(searchType == GetPostListParamsEnum.TAG_ID) {
             postTagsList = postsMapper.findPostByTag(params.getTagId());
-            System.out.println(postTagsList);
         }
 
         PostList postList = new PostList();
@@ -159,10 +158,13 @@ public class PostsServiceimpl implements PostsService {
     }
 
     @Override
-    public void likePost(Integer postId) {
-        Map<String,Object> userInfo = ThreadLocalUtil.get();
-        Integer userId = (Integer) userInfo.get("id");
-        postsMapper.likePost(postId, userId);
+    public void likePost(Integer userId, Integer postId, Boolean isLike) {
+        if(isLike) {
+            postsMapper.likePost(postId, userId);
+        } else {
+            postsMapper.dislikePost(postId, userId);
+        }
+
     }
 
 }

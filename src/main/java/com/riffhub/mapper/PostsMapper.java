@@ -27,6 +27,8 @@ public interface PostsMapper {
 
     void likePost(Integer postId, Integer userId);
 
+    void dislikePost(Integer postId, Integer userId);
+
     Integer getLikeCount(Integer postId);
 
     Integer getReplyCount(Integer postId);
