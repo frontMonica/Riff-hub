@@ -14,6 +14,8 @@ public class User {
     private String nickname;
     private Boolean diaryHidden;
     private String avatarUrl;
+    private String backgroundUrl;
+    private String introduce;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

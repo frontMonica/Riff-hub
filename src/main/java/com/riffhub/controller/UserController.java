@@ -7,12 +7,10 @@ import com.riffhub.service.UserService;
 import com.riffhub.utils.JwtUtil;
 import com.riffhub.utils.Md5Util;
 import com.riffhub.utils.ThreadLocalUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +54,12 @@ public class UserController {
         return Result.error("incorrect password!");
     }
 
+    @GetMapping("/")
+    public Result<User> getUserDetail(HttpServletRequest request) {
+        Map<String, Object> userInfo = JwtUtil.getLoginUserInfo(request);
+        String username = (String) userInfo.get("username");
+        return Result.success(userService.findByUsername(username));
+    }
 
    /* @PostMapping("/update")
     public Result update(@RequestBody Map<String,String> params){
