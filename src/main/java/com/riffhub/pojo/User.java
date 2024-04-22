@@ -16,6 +16,9 @@ public class User {
     private String avatarUrl;
     private String backgroundUrl;
     private String introduce;
+    private Integer fanCount;
+    private Integer postCount;
+    private Integer attentionCount;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

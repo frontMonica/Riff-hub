@@ -1,9 +1,14 @@
 package com.riffhub.controller;
 
 
+import com.riffhub.pojo.Fan;
+import com.riffhub.pojo.Post;
 import com.riffhub.pojo.Result;
 import com.riffhub.pojo.User;
+import com.riffhub.service.FanService;
+import com.riffhub.service.PostsService;
 import com.riffhub.service.UserService;
+import com.riffhub.type.GetPostListParams;
 import com.riffhub.utils.JwtUtil;
 import com.riffhub.utils.Md5Util;
 import com.riffhub.utils.ThreadLocalUtil;
@@ -13,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,6 +26,10 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private FanService fanService;
+    @Autowired
+    private PostsService postsService;
 
     @PostMapping("/register")
     public Result register(String username, String password, String nickname) {
@@ -56,9 +66,21 @@ public class UserController {
 
     @GetMapping("/")
     public Result<User> getUserDetail(HttpServletRequest request) {
+
         Map<String, Object> userInfo = JwtUtil.getLoginUserInfo(request);
         String username = (String) userInfo.get("username");
-        return Result.success(userService.findByUsername(username));
+        Integer userId = (Integer) userInfo.get("id");
+
+        List<Fan> fanList = fanService.getFansList(userId);
+        List<Post> postList = postsService.getPostListByUserId(userId);
+        List<User> attentionList = fanService.getAttentionList(userId);
+
+        User user = userService.findByUsername(username);
+
+        user.setAttentionCount(attentionList.size());
+        user.setPostCount(postList.size());
+        user.setFanCount(fanList.size());
+        return Result.success(user);
     }
 
    /* @PostMapping("/update")

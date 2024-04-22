@@ -50,7 +50,10 @@ public class FanServiceImpl implements FanService {
         for (Fan attention : attentionList) {
             attentionIdList.add(attention.getPersonId());
         }
-
+        System.out.println(attentionIdList);
+        if(attentionIdList.isEmpty()) {
+            return new ArrayList<>();
+        }
         return userMapper.findByBatchId(attentionIdList);
     }
 }

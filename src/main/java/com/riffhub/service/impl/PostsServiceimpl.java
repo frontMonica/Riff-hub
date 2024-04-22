@@ -91,6 +91,11 @@ public class PostsServiceimpl implements PostsService {
     }
 
     @Override
+    public List<Post> getPostListByUserId(Integer userId) {
+        return postsMapper.findPostByUserId(userId);
+    }
+
+    @Override
     public PostList getPostList(Integer userId, GetPostListParams params) {
 
         GetPostListParamsEnum searchType = params.getSearchType();
