@@ -18,8 +18,8 @@
 
 
     <insert id="reply" parameterType="com.riffhub.pojo.Reply">
-        insert into replies(post_id, user_id, content, create_time)
-        values (#{postId}, #{userId}, #{content}, now())
+        insert into replies(post_id, user_id, parent_reply_id, nickname, avatar_url content, create_time)
+        values (#{postId}, #{userId}, #{parentReplyId}, #{nickname}, #{avatarUrl}, #{content}, now())
     </insert>
 
 
@@ -31,6 +31,10 @@
 
     <select id="findByReplyId" resultType="com.riffhub.pojo.Reply">
         SELECT * FROM replies WHERE id=#{id}
+    </select>
+
+    <select id="getReplyListByPostId" resultType="com.riffhub.pojo.Reply">
+        SELECT * FROM replies WHERE post_id=#{postId}
     </select>
 
 

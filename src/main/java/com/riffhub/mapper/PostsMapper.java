@@ -12,7 +12,7 @@ import java.util.List;
 public interface PostsMapper {
     void add(Post post);
     void relatedTagsToPost(List<PostTags> list);
-    void reply(Integer postId,Integer userId, String content);
+    void reply(Reply reply);
     void deleteReply(Integer replyId);
     Reply findByReplyId(Integer ReplyId);
     List<Post> getPostList();
@@ -34,4 +34,6 @@ public interface PostsMapper {
     Integer getReplyCount(Integer postId);
 
     Like findByUseId(Integer userId, Integer postId);
+
+    List<Reply> getReplyListByPostId(Integer postId);
 }

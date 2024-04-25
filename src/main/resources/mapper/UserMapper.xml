@@ -11,6 +11,10 @@
         SELECT * FROM users WHERE username=#{username}
     </select>
 
+    <select id="findByUserId" resultType="com.riffhub.pojo.User">
+        SELECT * FROM users WHERE id=#{userId}
+    </select>
+
     <select id="findByBatchId" parameterType="java.util.List" resultType="com.riffhub.pojo.User">
         SELECT * FROM users
         WHERE id IN

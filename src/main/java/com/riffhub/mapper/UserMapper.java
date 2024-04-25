@@ -10,5 +10,7 @@ public interface UserMapper {
 
     User findByUsername(String username);
 
+    User findByUserId(Integer userId);
+
     List<User> findByBatchId(List<Integer> idList);
 }

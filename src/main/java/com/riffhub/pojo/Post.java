@@ -13,6 +13,7 @@ public class Post {
     private Integer id;
     private Integer userId;
     private String nickname;
+    private String avatarUrl;
     private String title;
     private String content;
     @Nullable

@@ -6,7 +6,9 @@ import com.riffhub.pojo.Result;
 import com.riffhub.pojo.User;
 import com.riffhub.service.PostsService;
 import com.riffhub.type.GetPostListParams;
+import com.riffhub.type.PostDetail;
 import com.riffhub.type.PostList;
+import com.riffhub.type.ReplyParams;
 import com.riffhub.utils.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +25,17 @@ public class PostsController {
     private PostsService postsService;
 
     @PostMapping("/publish")
-    public Result publish(@RequestBody Map<String,String> params) {
-        return postsService.publish(params);
+    public Result publish(@RequestBody Map<String,String> params, HttpServletRequest request) {
+        Map<String, Object> userInfo = JwtUtil.getLoginUserInfo(request);
+        Integer userId = (Integer) userInfo.get("id");
+        return postsService.publish(userId, params);
     }
 
     @PostMapping("/reply")
-    public Result reply(Integer postId, String content) {
-        postsService.reply(postId, content);
+    public Result reply(ReplyParams replyParams, HttpServletRequest request) {
+        Map<String, Object> userInfo = JwtUtil.getLoginUserInfo(request);
+        Integer userId = (Integer) userInfo.get("id");
+        postsService.reply(userId, replyParams);
         return Result.success();
     }
 
@@ -48,6 +54,12 @@ public class PostsController {
         Integer userId = (Integer) userInfo.get("id");
         return Result.success(postsService.getPostList(userId, params));
     }
+
+    @GetMapping("/detail")
+    public Result<PostDetail> getPostDetail(Integer postId) {
+        return Result.success(postsService.getPostDetail(postId));
+    }
+
     @DeleteMapping("/delete")
     public Result deletePost(Integer postId){
         Post post= postsService.findByPostId(postId);

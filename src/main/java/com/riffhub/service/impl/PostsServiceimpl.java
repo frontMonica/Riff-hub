@@ -5,11 +5,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.riffhub.Enum.GetPostListParamsEnum;
 import com.riffhub.mapper.PostsMapper;
+import com.riffhub.mapper.UserMapper;
 import com.riffhub.pojo.*;
 import com.riffhub.service.PostsService;
 import com.riffhub.service.TagService;
 import com.riffhub.type.GetPostListParams;
+import com.riffhub.type.PostDetail;
 import com.riffhub.type.PostList;
+import com.riffhub.type.ReplyParams;
 import com.riffhub.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Max;
 import org.apache.ibatis.session.RowBounds;
@@ -25,21 +28,24 @@ public class PostsServiceimpl implements PostsService {
     private TagService tagService;
     @Autowired
     private PostsMapper postsMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public void relatedTagsToPost(List<PostTags> list) {
         postsMapper.relatedTagsToPost(list);
     }
     @Override
-    public Result publish(Map<String, String> posts) {
+    public Result publish(Integer userId, Map<String, String> posts) {
         Post post = new Post();
 
         post.setContent(posts.get("content"));
         post.setTitle(posts.get("title"));
-        Map<String,Object> userInfo = ThreadLocalUtil.get();
-        Integer id = (Integer) userInfo.get("id");
-        post.setUserId(id);
-        post.setNickname(posts.get("nickname"));
+
+        User user = userMapper.findByUserId(userId);
+        post.setUserId(userId);
+        post.setNickname(user.getNickname());
+        post.setAvatarUrl(user.getAvatarUrl());
 
         System.out.println(posts);
 
@@ -73,10 +79,21 @@ public class PostsServiceimpl implements PostsService {
     }
 
     @Override
-    public void reply(Integer postId, String content) {
-        Map<String,Object> userInfo = ThreadLocalUtil.get();
-        Integer userId = (Integer) userInfo.get("id");
-        postsMapper.reply(postId, userId, content);
+    public void reply(Integer userId, ReplyParams replyParams) {
+        User user = userMapper.findByUserId(userId);
+        Reply reply = new Reply();
+
+        reply.setUserId(userId);
+        reply.setNickname(user.getNickname());
+        reply.setAvatarUrl(user.getAvatarUrl());
+        reply.setPostId(replyParams.getPostId());
+        reply.setContent(replyParams.getContent());
+
+        if(replyParams.getParentReplyId() != null) {
+            reply.setParentReplyId(replyParams.getParentReplyId());
+        }
+
+        postsMapper.reply(reply);
     }
 
 
@@ -170,6 +187,18 @@ public class PostsServiceimpl implements PostsService {
             postsMapper.dislikePost(postId, userId);
         }
 
+    }
+
+    @Override
+    public PostDetail getPostDetail(Integer postId) {
+        PostDetail postDetail = new PostDetail();
+        Post post = this.findByPostId(postId);
+        List<Reply> replyList = postsMapper.getReplyListByPostId(postId);
+
+        postDetail.setPost(post);
+        postDetail.setReply(replyList);
+
+       return postDetail;
     }
 
 }

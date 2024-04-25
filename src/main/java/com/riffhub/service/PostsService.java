@@ -5,16 +5,18 @@ import com.riffhub.pojo.PostTags;
 import com.riffhub.pojo.Reply;
 import com.riffhub.pojo.Result;
 import com.riffhub.type.GetPostListParams;
+import com.riffhub.type.PostDetail;
 import com.riffhub.type.PostList;
+import com.riffhub.type.ReplyParams;
 
 import java.util.List;
 import java.util.Map;
 
 public interface PostsService {
-    Result publish(Map<String, String> posts);
+    Result publish(Integer userId, Map<String, String> posts);
 
     void relatedTagsToPost(List<PostTags> list);
-    void reply(Integer postId, String content);
+    void reply(Integer userId, ReplyParams replyParams);
 
     void deleteReply(Integer replyId);
 
@@ -29,5 +31,7 @@ public interface PostsService {
     Post findByPostId(Integer postId);
 
     void likePost(Integer userId, Integer postId, Boolean isLike);
+
+    PostDetail getPostDetail(Integer postId);
 
 }
