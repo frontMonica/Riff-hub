@@ -14,6 +14,8 @@ public class Post {
     private Integer userId;
     private String nickname;
     private String avatarUrl;
+    @Nullable
+    private String imgUrl;
     private String title;
     private String content;
     @Nullable

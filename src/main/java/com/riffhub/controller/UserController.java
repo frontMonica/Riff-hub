@@ -65,17 +65,23 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public Result<User> getUserDetail(HttpServletRequest request) {
-
+    public Result<User> getUserDetail(Integer userId, HttpServletRequest request) {
         Map<String, Object> userInfo = JwtUtil.getLoginUserInfo(request);
-        String username = (String) userInfo.get("username");
-        Integer userId = (Integer) userInfo.get("id");
+        Integer loginUserId = (Integer) userInfo.get("id");
 
-        List<Fan> fanList = fanService.getFansList(userId);
-        List<Post> postList = postsService.getPostListByUserId(userId);
-        List<User> attentionList = fanService.getAttentionList(userId);
+        Integer realUserId;
 
-        User user = userService.findByUsername(username);
+        if(userId == null) {
+            realUserId = loginUserId;
+        } else {
+            realUserId = userId;
+        }
+        System.out.println(realUserId);
+        List<Fan> fanList = fanService.getFansList(realUserId);
+        List<Post> postList = postsService.getPostListByUserId(realUserId);
+        List<User> attentionList = fanService.getAttentionList(realUserId);
+
+        User user = userService.findByUserId(realUserId);
 
         user.setAttentionCount(attentionList.size());
         user.setPostCount(postList.size());

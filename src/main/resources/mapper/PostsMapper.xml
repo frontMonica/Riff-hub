@@ -3,8 +3,8 @@
 
 <mapper namespace="com.riffhub.mapper.PostsMapper">
     <insert id="add" parameterType="com.riffhub.pojo.Post" useGeneratedKeys="true" keyProperty="id">
-        insert into posts(content, title, nickname,user_id, create_time, update_time)
-        values (#{content}, #{title}, #{nickname},#{userId}, now(), now())
+        insert into posts(content, title, nickname,user_id, img_url,  create_time, update_time)
+        values (#{content}, #{title}, #{nickname},#{userId}, #{imgUrl}, now(), now())
     </insert>
 
 
@@ -18,7 +18,7 @@
 
 
     <insert id="reply" parameterType="com.riffhub.pojo.Reply">
-        insert into replies(post_id, user_id, parent_reply_id, nickname, avatar_url content, create_time)
+        insert into replies(post_id, user_id, parent_reply_id, nickname, avatar_url, content, create_time)
         values (#{postId}, #{userId}, #{parentReplyId}, #{nickname}, #{avatarUrl}, #{content}, now())
     </insert>
 

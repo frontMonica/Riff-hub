@@ -41,13 +41,12 @@ public class PostsServiceimpl implements PostsService {
 
         post.setContent(posts.get("content"));
         post.setTitle(posts.get("title"));
+        post.setImgUrl(posts.get("imgUrl"));
 
         User user = userMapper.findByUserId(userId);
         post.setUserId(userId);
         post.setNickname(user.getNickname());
         post.setAvatarUrl(user.getAvatarUrl());
-
-        System.out.println(posts);
 
         String[] list = posts.get("tags").split(",");
         ArrayList<String> newTags = new ArrayList<>();
@@ -150,7 +149,6 @@ public class PostsServiceimpl implements PostsService {
 
         postList.setTotal(p.getTotal());
         postList.setPostList(p.getList());
-
         for(Post post : postList.getPostList()) {
             Integer postId = post.getId();
             Integer likeCount = postsMapper.getLikeCount(postId);

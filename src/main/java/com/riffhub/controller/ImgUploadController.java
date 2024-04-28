@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import javax.sound.midi.SysexMessage;
 
+import com.riffhub.pojo.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,7 +30,7 @@ public class ImgUploadController {
     private String fileSavePath;
 
     @PostMapping("/upload")
-    public Map<String, Object> fileupload(@RequestParam("file") MultipartFile file, HttpServletRequest req){
+    public Result<Map<String, Object>> fileupload(@RequestParam("file") MultipartFile file, HttpServletRequest req){
 
         Map<String,Object> result = new HashMap<>();
         //获取文件的名字
@@ -39,7 +40,7 @@ public class ImgUploadController {
         if(!originName.endsWith(".jpg")) {
             result.put("status","error");
             result.put("msg", "文件类型不对");
-            return result;
+            return Result.error("error");
         }
         //给上传的文件新建目录
         String format = sdf.format(new Date());
@@ -69,7 +70,7 @@ public class ImgUploadController {
             result.put("status", "error");
             result.put("msg",e.getMessage());
         }
-        return result;
+        return Result.success(result);
 
     }
 }
