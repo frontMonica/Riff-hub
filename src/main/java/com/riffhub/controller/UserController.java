@@ -89,17 +89,10 @@ public class UserController {
         return Result.success(user);
     }
 
-   /* @PostMapping("/update")
-    public Result update(@RequestBody Map<String,String> params){
-        return Result.error(params);
-    }/*
-    */
-
-//
-//    @PostMapping("/logout")
-//    public Result logout() {
-//        SecurityContextHolder.clearContext();
-//        return Result.success();
-//    }
+    @PostMapping("/update")
+    public Result update(User userInfo) {
+        userService.update(userInfo);
+        return Result.success();
+    }
 
 }

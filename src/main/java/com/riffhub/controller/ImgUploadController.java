@@ -37,11 +37,11 @@ public class ImgUploadController {
         String originName = file.getOriginalFilename();
         System.out.println("originName:"+originName);
         //判断文件类型
-        if(!originName.endsWith(".jpg")) {
-            result.put("status","error");
-            result.put("msg", "文件类型不对");
-            return Result.error("error");
-        }
+//        if(!originName.endsWith(".jpg")) {
+//            result.put("status","error");
+//            result.put("msg", "文件类型不对");
+//            return Result.error("error");
+//        }
         //给上传的文件新建目录
         String format = sdf.format(new Date());
         String realPath = fileSavePath + format;

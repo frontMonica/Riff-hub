@@ -22,4 +22,15 @@
             #{name}
         </foreach>
     </select>
+
+    <update id="update" parameterType="com.riffhub.pojo.User">
+        UPDATE users
+        SET nickname = #{nickname},
+            diary_hidden = #{diaryHidden},
+            avatar_url = #{avatarUrl},
+            background_url = #{backgroundUrl},
+            introduce = #{introduce},
+            update_time = now()
+        WHERE id = #{id}
+    </update>
 </mapper>

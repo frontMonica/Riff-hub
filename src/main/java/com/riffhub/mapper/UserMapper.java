@@ -13,4 +13,6 @@ public interface UserMapper {
     User findByUserId(Integer userId);
 
     List<User> findByBatchId(List<Integer> idList);
+
+    void update(User userInfo);
 }
