@@ -22,14 +22,12 @@ public class FanServiceImpl implements FanService {
     private UserMapper userMapper;
 
     @Override
-    public void attention(Integer attentionId, Boolean isAttention) {
-        Map<String,Object> userInfo = ThreadLocalUtil.get();
-        Integer userId = (Integer) userInfo.get("id");
-        String username = (String) userInfo.get("username");
+    public void attention(Integer attentionId, Boolean isAttention, Integer userId) {
 
-        User user = userMapper.findByUsername(username);
+        User user = userMapper.findByUserId(userId);
         String avatar = (String) user.getAvatarUrl();
         String nickname = (String) user.getNickname();
+        String username = (String) user.getUsername();
         if(isAttention) {
             fanMapper.attention(attentionId, userId, username, nickname, avatar);
         } else {
@@ -55,5 +53,15 @@ public class FanServiceImpl implements FanService {
             return new ArrayList<>();
         }
         return userMapper.findByBatchId(attentionIdList);
+    }
+
+    @Override
+    public Boolean checkAttention(Integer userId, Integer attentionId) {
+        Fan fan = fanMapper.checkAttention(userId, attentionId);
+        if (fan == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

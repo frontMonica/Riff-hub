@@ -76,12 +76,16 @@ public class UserController {
         } else {
             realUserId = userId;
         }
-        System.out.println(realUserId);
         List<Fan> fanList = fanService.getFansList(realUserId);
         List<Post> postList = postsService.getPostListByUserId(realUserId);
         List<User> attentionList = fanService.getAttentionList(realUserId);
 
         User user = userService.findByUserId(realUserId);
+
+        if(userId != null) {
+            Boolean isAttenion = fanService.checkAttention(loginUserId, realUserId);
+            user.setIsAttention(isAttenion);
+        }
 
         user.setAttentionCount(attentionList.size());
         user.setPostCount(postList.size());

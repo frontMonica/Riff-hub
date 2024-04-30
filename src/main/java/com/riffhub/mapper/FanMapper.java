@@ -14,4 +14,6 @@ public interface FanMapper {
     List<Fan> getFansList(Integer userId);
 
     List<Fan> getAttentionList(Integer attentionId);
+
+    Fan checkAttention(Integer userId, Integer attentionId);
 }

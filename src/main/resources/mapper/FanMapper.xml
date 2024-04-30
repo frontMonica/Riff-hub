@@ -21,4 +21,8 @@
         SELECT * FROM fans WHERE fan_id=#{attentionId}
     </select>
 
+    <select id="checkAttention" resultType="com.riffhub.pojo.Fan">
+        SELECT * FROM fans WHERE fan_id=#{userId} AND person_id=#{attentionId}
+    </select>
+
 </mapper>

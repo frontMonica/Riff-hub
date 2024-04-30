@@ -1,7 +1,9 @@
 package com.riffhub.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import lombok.Data;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
@@ -16,6 +18,8 @@ public class User {
     private String avatarUrl;
     private String backgroundUrl;
     private String introduce;
+    @Nullable
+    private Boolean isAttention;
     private Integer fanCount;
     private Integer postCount;
     private Integer attentionCount;
