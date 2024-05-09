@@ -3,8 +3,8 @@
 
 <mapper namespace="com.riffhub.mapper.PostsMapper">
     <insert id="add" parameterType="com.riffhub.pojo.Post" useGeneratedKeys="true" keyProperty="id">
-        insert into posts(content, title, nickname,user_id, img_url,  create_time, update_time)
-        values (#{content}, #{title}, #{nickname},#{userId}, #{imgUrl}, now(), now())
+        insert into posts(content, title, nickname,user_id, img_url, avatar_url, create_time, update_time)
+        values (#{content}, #{title}, #{nickname},#{userId}, #{imgUrl}, #{avatarUrl}, now(), now())
     </insert>
 
 
