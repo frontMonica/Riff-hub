@@ -23,6 +23,7 @@ public class User {
     private Integer fanCount;
     private Integer postCount;
     private Integer attentionCount;
+    private Integer diaryCount;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public interface DiaryService {
     void add(String title, String diaryContent, Boolean isHidden);
     void update(Diary diary);
-    List<Diary> getList(Integer userId);
+    List<Diary> getList(Integer userId, Integer loginUserId);
 
     void delete(Integer diaryId);
 }

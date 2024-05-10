@@ -28,10 +28,8 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public List<Diary> getList(Integer userId) {
-        Map<String,Object> userInfo = ThreadLocalUtil.get();
-        Integer loginUserId = (Integer) userInfo.get("id");
-        if(loginUserId == userId) {
+    public List<Diary> getList(Integer userId, Integer loginUserId) {
+        if(loginUserId.equals(userId)) {
             return diaryMapper.getAllList(userId);
         } else {
             return diaryMapper.getNotHiddenList(userId);

@@ -1,10 +1,8 @@
 package com.riffhub.controller;
 
 
-import com.riffhub.pojo.Fan;
-import com.riffhub.pojo.Post;
-import com.riffhub.pojo.Result;
-import com.riffhub.pojo.User;
+import com.riffhub.pojo.*;
+import com.riffhub.service.DiaryService;
 import com.riffhub.service.FanService;
 import com.riffhub.service.PostsService;
 import com.riffhub.service.UserService;
@@ -30,6 +28,8 @@ public class UserController {
     private FanService fanService;
     @Autowired
     private PostsService postsService;
+    @Autowired
+    private DiaryService diaryService;
 
     @PostMapping("/register")
     public Result register(String username, String password, String nickname) {
@@ -79,6 +79,7 @@ public class UserController {
         List<Fan> fanList = fanService.getFansList(realUserId);
         List<Post> postList = postsService.getPostListByUserId(realUserId);
         List<User> attentionList = fanService.getAttentionList(realUserId);
+        List<Diary> diaryList = diaryService.getList(realUserId, loginUserId);
 
         User user = userService.findByUserId(realUserId);
 
@@ -90,6 +91,8 @@ public class UserController {
         user.setAttentionCount(attentionList.size());
         user.setPostCount(postList.size());
         user.setFanCount(fanList.size());
+        user.setDiaryCount(diaryList.size());
+
         return Result.success(user);
     }
 
