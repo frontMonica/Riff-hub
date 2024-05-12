@@ -23,7 +23,7 @@ public class DiaryController {
         return Result.success();
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public Result update(@RequestBody Diary diary) {
         diaryService.update(diary);
         return Result.success();
@@ -36,7 +36,7 @@ public class DiaryController {
         return Result.success(diaryService.getList(userId, loginUserId));
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public Result delete(Integer diaryId) {
         diaryService.delete(diaryId);
         return Result.success();
