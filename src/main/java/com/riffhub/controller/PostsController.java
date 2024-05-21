@@ -60,8 +60,9 @@ public class PostsController {
         return Result.success(postsService.getPostDetail(postId));
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public Result deletePost(Integer postId){
+        System.out.println(postId);
         Post post= postsService.findByPostId(postId);
         if (post == null) {
             return Result.error("Post does not exist!");

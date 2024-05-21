@@ -30,7 +30,7 @@
 
 
     <select id="findByReplyId" resultType="com.riffhub.pojo.Reply">
-        SELECT * FROM replies WHERE id=#{id}
+        SELECT * FROM replies WHERE id=#{postId}
     </select>
 
     <select id="getReplyListByPostId" resultType="com.riffhub.pojo.Reply">
