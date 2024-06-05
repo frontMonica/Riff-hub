@@ -4,10 +4,10 @@ spring:
     url: jdbc:mysql://localhost:3306/riff_hub
     username: root
     password: reandnagi1
-    mvc:
-      view:
-        prefix: /
-        suffix: .jsp
+#    mvc:
+#      view:
+#        prefix: /
+#        suffix: .jsp
 file-save-path: /Users/panglinfan/Downloads/riff-hub/src/main/resources/static/images/
 mybatis:
   configuration:
