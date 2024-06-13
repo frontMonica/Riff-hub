@@ -7,6 +7,7 @@ import com.riffhub.Enum.GetPostListParamsEnum;
 import com.riffhub.mapper.PostsMapper;
 import com.riffhub.mapper.UserMapper;
 import com.riffhub.pojo.*;
+import com.riffhub.service.NotificationService;
 import com.riffhub.service.PostsService;
 import com.riffhub.service.TagService;
 import com.riffhub.type.GetPostListParams;
@@ -30,6 +31,8 @@ public class PostsServiceimpl implements PostsService {
     private PostsMapper postsMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private NotificationService notificationService;
 
     @Override
     public void relatedTagsToPost(List<PostTags> list) {
@@ -78,20 +81,35 @@ public class PostsServiceimpl implements PostsService {
     }
 
     @Override
-    public void reply(Integer userId, ReplyParams replyParams) {
-        User user = userMapper.findByUserId(userId);
+    public void reply(User userInfo, ReplyParams replyParams) {
+
+        Integer userId = userInfo.getId();
         Reply reply = new Reply();
 
         reply.setUserId(userId);
-        reply.setNickname(user.getNickname());
-        reply.setAvatarUrl(user.getAvatarUrl());
+        reply.setNickname(userInfo.getNickname());
+        reply.setAvatarUrl(userInfo.getAvatarUrl());
         reply.setPostId(replyParams.getPostId());
         reply.setContent(replyParams.getContent());
 
+        Notification notification = new Notification();
+
+        notification.setType(2);
+        notification.setIsDone(false);
+        notification.setPostId(replyParams.getPostId());
+        notification.setContent(userInfo.getNickname() + " replied you: " + replyParams.getContent());
+
+        Post post = postsMapper.findByPostId(replyParams.getPostId());
+        notification.setUserId(post.getUserId());
+
         if(replyParams.getParentReplyId() != null) {
             reply.setParentReplyId(replyParams.getParentReplyId());
+
+            Reply parentReply = postsMapper.findReplyByReplyId(replyParams.getParentReplyId());
+            notification.setUserId(parentReply.getUserId());
         }
 
+        notificationService.add(notification);
         postsMapper.reply(reply);
     }
 
@@ -178,8 +196,22 @@ public class PostsServiceimpl implements PostsService {
     }
 
     @Override
-    public void likePost(Integer userId, Integer postId, Boolean isLike) {
+    public void likePost(User userInfo, Integer postId, Boolean isLike) {
+        Integer userId = userInfo.getId();
+
         if(isLike) {
+            Post post = postsMapper.findByPostId(postId);
+
+            String userName = userInfo.getNickname();
+            String content = userName + " liked your post.";
+            Notification notification = new Notification();
+            notification.setType(1);
+            notification.setIsDone(false);
+            notification.setUserId(post.getUserId());
+            notification.setPostId(postId);
+            notification.setContent(content);
+
+            notificationService.add(notification);
             postsMapper.likePost(postId, userId);
         } else {
             postsMapper.dislikePost(postId, userId);

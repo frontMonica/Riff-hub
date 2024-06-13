@@ -36,4 +36,6 @@ public interface PostsMapper {
     Like findByUseId(Integer userId, Integer postId);
 
     List<Reply> getReplyListByPostId(Integer postId);
+
+    Reply findReplyByReplyId(Integer replyId);
 }

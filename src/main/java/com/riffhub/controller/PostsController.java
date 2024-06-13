@@ -5,6 +5,7 @@ import com.riffhub.pojo.Reply;
 import com.riffhub.pojo.Result;
 import com.riffhub.pojo.User;
 import com.riffhub.service.PostsService;
+import com.riffhub.service.UserService;
 import com.riffhub.type.GetPostListParams;
 import com.riffhub.type.PostDetail;
 import com.riffhub.type.PostList;
@@ -24,6 +25,9 @@ public class PostsController {
     @Autowired
     private PostsService postsService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/publish")
     public Result publish(@RequestBody Map<String,String> params, HttpServletRequest request) {
         Map<String, Object> userInfo = JwtUtil.getLoginUserInfo(request);
@@ -35,7 +39,9 @@ public class PostsController {
     public Result reply(ReplyParams replyParams, HttpServletRequest request) {
         Map<String, Object> userInfo = JwtUtil.getLoginUserInfo(request);
         Integer userId = (Integer) userInfo.get("id");
-        postsService.reply(userId, replyParams);
+
+        User user = userService.findByUserId(userId);
+        postsService.reply(user, replyParams);
         return Result.success();
     }
 
@@ -75,7 +81,9 @@ public class PostsController {
     public Result likePost(Integer postId,Boolean isLike , HttpServletRequest request) {
         Map<String, Object> userInfo = JwtUtil.getLoginUserInfo(request);
         Integer userId = (Integer) userInfo.get("id");
-        postsService.likePost(userId, postId, isLike);
+
+        User user = userService.findByUserId(userId);
+        postsService.likePost(user, postId, isLike);
         return Result.success();
     }
 

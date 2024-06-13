@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.riffhub.mapper.NotificationMapper">
+    <insert id="add" parameterType="com.riffhub.pojo.Notification" >
+        INSERT INTO notifications (user_id, post_id, is_done, type, content,create_time)
+        VALUES (#{userId}, #{postId}, false, #{type},#{content}, now())
+    </insert>
+
+    <select id="getList" resultType="com.riffhub.pojo.Notification">
+        SELECT * FROM notifications WHERE user_id=#{userId}
+        ORDER BY create_time DESC;
+    </select>
+
+    <update id="update">
+        UPDATE notifications
+        SET is_done = true
+        WHERE user_id = #{userId}
+    </update>
+
+</mapper>

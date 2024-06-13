@@ -47,6 +47,9 @@
     <select id="findPostByTitle" resultType="com.riffhub.pojo.Post">
         SELECT * FROM Posts WHERE title LIKE CONCAT('%', #{title}, '%')
     </select>
+    <select id="findReplyByReplyId" resultType="com.riffhub.pojo.Reply">
+        SELECT * FROM replies WHERE id=#{replyId}
+    </select>
     <select id="findPostByPostId" resultType="com.riffhub.pojo.Post">
         SELECT * FROM Posts WHERE id IN
         <foreach item="item" index="index" collection="postTagsList" open="(" separator="," close=")">

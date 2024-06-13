@@ -1,9 +1,6 @@
 package com.riffhub.service;
 
-import com.riffhub.pojo.Post;
-import com.riffhub.pojo.PostTags;
-import com.riffhub.pojo.Reply;
-import com.riffhub.pojo.Result;
+import com.riffhub.pojo.*;
 import com.riffhub.type.GetPostListParams;
 import com.riffhub.type.PostDetail;
 import com.riffhub.type.PostList;
@@ -16,7 +13,7 @@ public interface PostsService {
     Result publish(Integer userId, Map<String, String> posts);
 
     void relatedTagsToPost(List<PostTags> list);
-    void reply(Integer userId, ReplyParams replyParams);
+    void reply(User userInfo, ReplyParams replyParams);
 
     void deleteReply(Integer replyId);
 
@@ -30,7 +27,7 @@ public interface PostsService {
 
     Post findByPostId(Integer postId);
 
-    void likePost(Integer userId, Integer postId, Boolean isLike);
+    void likePost(User userInfo, Integer postId, Boolean isLike);
 
     PostDetail getPostDetail(Integer postId);
 
