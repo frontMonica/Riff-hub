@@ -14,12 +14,20 @@
         SELECT * FROM tags WHERE tag_name=#{tagName}
     </select>
 
+    <select id="searchTagByName" resultType="com.riffhub.pojo.Tag">
+        SELECT * FROM tags WHERE tag_name LIKE CONCAT('%', #{tagName}, '%')
+    </select>
+
     <select id="batchFindByTagName" parameterType="java.util.List" resultType="com.riffhub.pojo.Tag">
         SELECT * FROM tags
         WHERE tag_name IN
         <foreach collection="list" item="name" open="(" separator="," close=")">
             #{name}
         </foreach>
+    </select>
+
+    <select id="getTags" resultType="com.riffhub.pojo.Tag">
+        SELECT * FROM tags
     </select>
 
 </mapper>

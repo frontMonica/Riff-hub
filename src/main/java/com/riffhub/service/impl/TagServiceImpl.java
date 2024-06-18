@@ -27,4 +27,14 @@ public class TagServiceImpl implements TagService {
     public List<Tag> batchFindByTagName(String [] list) {
         return tagMapper.batchFindByTagName(list);
     }
+
+    @Override
+    public List<Tag> getTags() {
+        return tagMapper.getTags();
+    }
+
+    @Override
+    public List<Tag> searchTagByName(String tagName) {
+        return tagMapper.searchTagByName(tagName);
+    }
 }

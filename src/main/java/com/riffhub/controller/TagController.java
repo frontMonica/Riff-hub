@@ -4,12 +4,10 @@ import com.riffhub.pojo.Result;
 import com.riffhub.pojo.Tag;
 import com.riffhub.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/tags")
@@ -29,5 +27,15 @@ public class TagController {
         if(newTags.isEmpty()) return Result.error("tag has already exist!");
         tagService.add(newTags);
         return Result.success();
+    }
+
+    @GetMapping("/get")
+    public Result<List<Tag>> getTags() {
+        return Result.success(tagService.getTags());
+    }
+
+    @GetMapping("/get/name")
+    public Result<List<Tag>> searchTagByName(String tagName) {
+        return Result.success(tagService.searchTagByName(tagName));
     }
 }
