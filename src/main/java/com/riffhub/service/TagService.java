@@ -12,7 +12,7 @@ public interface TagService {
 
     List<Tag> batchFindByTagName(String [] list);
 
-    List<Tag> getTags();
+    Tag getTagById(Integer tagId);
 
     List<Tag> searchTagByName(String tagName);
 }

@@ -26,8 +26,8 @@
         </foreach>
     </select>
 
-    <select id="getTags" resultType="com.riffhub.pojo.Tag">
-        SELECT * FROM tags
+    <select id="getTagById" resultType="com.riffhub.pojo.Tag">
+        SELECT * FROM tags WHERE id = #{tagId}
     </select>
 
 </mapper>

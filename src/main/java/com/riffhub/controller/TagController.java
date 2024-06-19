@@ -30,8 +30,8 @@ public class TagController {
     }
 
     @GetMapping("/get")
-    public Result<List<Tag>> getTags() {
-        return Result.success(tagService.getTags());
+    public Result<Tag> getTagById(Integer tagId) {
+        return Result.success(tagService.getTagById(tagId));
     }
 
     @GetMapping("/get/name")

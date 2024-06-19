@@ -12,7 +12,7 @@ public interface TagMapper {
     void add(ArrayList<String> tags);
     List<Tag> batchFindByTagName(String [] list);
 
-    List<Tag> getTags();
+    Tag getTagById(Integer tagId);
 
     List<Tag> searchTagByName(String tagName);
 
