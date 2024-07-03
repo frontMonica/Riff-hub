@@ -18,6 +18,7 @@ public class Post {
     private String imgUrl;
     private String title;
     private String content;
+    private String tags;
     @Nullable
     private Integer likeCount;
     @Nullable

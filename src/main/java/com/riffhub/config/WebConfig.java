@@ -39,24 +39,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer; /** *
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 //
-//    @Autowired
-//    private LoginInterceptors loginInterceptors;
-//
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(loginInterceptors).excludePathPatterns("/user/login","/user/register","/images/**");
-//    }
+    @Autowired
+    private LoginInterceptors loginInterceptors;
+
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptors).excludePathPatterns("/user/login","/user/register","/images/**");
+    }
 
     @Value("${file-save-path}")
     private String fileSavePath;
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) { /* * 一小时内不需要再预检 */
-//        registry.addMapping("/**")
-//                .allowedOrigins("http://localhost:5173")
-//                .allowCredentials(true)
-//                .allowedHeaders(CorsConfiguration.ALL)
-//                .allowedMethods(CorsConfiguration.ALL)
-//                .maxAge(3600);
-//    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**").addResourceLocations("file:"+fileSavePath);

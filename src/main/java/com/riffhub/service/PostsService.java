@@ -31,4 +31,6 @@ public interface PostsService {
 
     PostDetail getPostDetail(Integer postId);
 
+    List<Post> getPostsByTime(Integer userId,  String timeRange);
+
 }

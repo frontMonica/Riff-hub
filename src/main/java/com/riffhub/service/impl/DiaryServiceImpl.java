@@ -15,10 +15,7 @@ public class DiaryServiceImpl implements DiaryService {
     @Autowired
     private DiaryMapper diaryMapper;
     @Override
-    public void add(String title, String diaryContent, Boolean isHidden) {
-        Map<String,Object> userInfo = ThreadLocalUtil.get();
-        Integer userId = (Integer) userInfo.get("id");
-
+    public void add(Integer userId , String title, String diaryContent, Boolean isHidden) {
         diaryMapper.add(userId, title, diaryContent,isHidden);
     }
 

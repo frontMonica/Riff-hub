@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Console;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -45,6 +46,7 @@ public class PostsServiceimpl implements PostsService {
         post.setContent(posts.get("content"));
         post.setTitle(posts.get("title"));
         post.setImgUrl(posts.get("imgUrl"));
+        post.setTags(posts.get("tags"));
 
         User user = userMapper.findByUserId(userId);
         post.setUserId(userId);
@@ -231,4 +233,18 @@ public class PostsServiceimpl implements PostsService {
        return postDetail;
     }
 
+    @Override
+    public List<Post> getPostsByTime(Integer userId,  String timeRange) {
+        Calendar calendar = Calendar.getInstance();
+        if ("month".equalsIgnoreCase(timeRange)) {
+            calendar.add(Calendar.MONTH, -1);
+        } else if ("week".equalsIgnoreCase(timeRange)) {
+            calendar.add(Calendar.WEEK_OF_YEAR, -1);
+        }
+        Date startDate = calendar.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = sdf.format(startDate);
+
+        return postsMapper.findPostsByUserIdAndTimeRange(userId, formattedDate);
+    }
 }

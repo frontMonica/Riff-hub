@@ -18,8 +18,10 @@ public class DiaryController {
     private DiaryService diaryService;
 
     @PostMapping("/add")
-    public Result add(String title, String diaryContent, Boolean isHidden) {
-        diaryService.add(title, diaryContent,isHidden);
+    public Result add(String title, String diaryContent, Boolean isHidden,  HttpServletRequest request) {
+        Map<String, Object> userInfo = JwtUtil.getLoginUserInfo(request);
+        Integer userId = (Integer) userInfo.get("id");
+        diaryService.add(userId ,title, diaryContent,isHidden);
         return Result.success();
     }
 

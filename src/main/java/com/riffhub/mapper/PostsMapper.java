@@ -38,4 +38,6 @@ public interface PostsMapper {
     List<Reply> getReplyListByPostId(Integer postId);
 
     Reply findReplyByReplyId(Integer replyId);
+
+    List<Post> findPostsByUserIdAndTimeRange(Integer userId, String formattedDate);
 }

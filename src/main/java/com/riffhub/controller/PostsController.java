@@ -68,7 +68,6 @@ public class PostsController {
 
     @PostMapping("/delete")
     public Result deletePost(Integer postId){
-        System.out.println(postId);
         Post post= postsService.findByPostId(postId);
         if (post == null) {
             return Result.error("Post does not exist!");
@@ -85,6 +84,13 @@ public class PostsController {
         User user = userService.findByUserId(userId);
         postsService.likePost(user, postId, isLike);
         return Result.success();
+    }
+
+    @GetMapping("/get/time")
+    public Result<List<Post>> getPostsByTime(String time, HttpServletRequest request) {
+        Map<String, Object> userInfo = JwtUtil.getLoginUserInfo(request);
+        Integer userId = (Integer) userInfo.get("id");
+        return Result.success(postsService.getPostsByTime(userId, time));
     }
 
 }

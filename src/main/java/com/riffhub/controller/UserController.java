@@ -58,7 +58,6 @@ public class UserController {
             claims.put("username",user.getUsername());
             String token = JwtUtil.genToken(claims);
             User userinfo = ThreadLocalUtil.get();
-            System.out.println(userinfo);
             return  Result.success(token);
         }
         return Result.error("incorrect password!");
